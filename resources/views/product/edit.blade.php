@@ -16,6 +16,14 @@
         <input type="number" name="price" id="price" value="{{ $product->price }}" required>
     </div>
     <div>
+        <label for="category_id">Categoria</label>
+        <select name="category_id">
+            @foreach($categories as $category)
+                <option value="{{ $category->id }}" {{ $category->id == $product->category_id ? 'selected' : '' }}>{{ $category->name }}</option>
+            @endforeach
+        </select>
+    </div>
+    <div>
         <button type="submit">Salvar</button>
         <a href="{{ route('products.index') }}">Cancelar</a>
     </div>

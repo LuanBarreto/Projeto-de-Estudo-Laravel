@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Models\Product;
 
@@ -16,7 +17,9 @@ class ProductController extends Controller
             'price' => ''
         ];
 
-        return view('product.create', compact('product'));
+        $categories = Category::all();
+
+        return view('product.create', compact('product', 'categories'));
     }
 
     public function store(Request $request)
@@ -35,8 +38,9 @@ class ProductController extends Controller
     public function edit($id)
     {
         $product = Product::findOrFail($id);
+        $categories = Category::all();
 
-        return view('product.edit', compact('product'));
+        return view('product.edit', compact('product', 'categories'));
     }
 
     public function update(Request $request, $id)
@@ -46,10 +50,14 @@ class ProductController extends Controller
         $data = $request->validate([
            'name' => 'required',
            'description' => 'required',
-           'price' => 'required|numeric'
+           'price' => 'required|numeric',
+           'category_id' => 'required'
         ]);
 
         $product->update($data);
+
+        $product->category_id = $request->input('category_id');
+        $product->save();
 
         return redirect()->route('products.index');
     }
@@ -66,8 +74,9 @@ class ProductController extends Controller
     public function show($id)
     {
         $product = Product::findOrFail($id);
+        $category = $product->category;
 
-        return view('product.show', compact('product'));
+        return view('product.show', compact('product', 'category'));
     }
 
     public function index()

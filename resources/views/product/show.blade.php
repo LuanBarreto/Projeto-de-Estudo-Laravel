@@ -3,9 +3,14 @@
 @section('content')
     <h1>Detalhes do Produto</h1>
 
-    <h2>{{ $product->name }}</h2>
-    <p>{{ $product->description }}</p>
-    <p>{{ $product->price }}</p>
+    <h2>Nome: {{ $product->name }}</h2>
+    <p>Descrição: {{ $product->description }}</p>
+    <p>Preço: {{ $product->price }}</p>
+    @if($product->category)
+        <p>Categoria: {{ $product->category->name }}</p>
+        <p>Marca: {{ $product->category->brand }}</p>
+        <p>Status: {{ $product->category->status ? 'Ativo' : 'Inativo' }}</p>
+    @endif
 
     <a href="{{ route('products.edit', ['id' => $product->id]) }}">Editar</a>
 

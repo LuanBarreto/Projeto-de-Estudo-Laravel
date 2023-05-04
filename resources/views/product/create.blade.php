@@ -17,6 +17,14 @@
                 <label for="price">Preço:</label>
                 <input type="number" name="price" id="price" class="form-control" step="0.01" value="{{ $product['price'] ?? '' }}">
             </div>
+            <div class="form-group">
+                <label for="category_id">Categoria</label>
+                <select name="category_id">
+                    @foreach($categories as $category)
+                        <option value="{{ $category->id }}">{{ $category->name }}</option>
+                    @endforeach
+                </select>
+            </div>
             <button type="submit" class="btn btn-primary">Salvar</button>
         </form>
 
